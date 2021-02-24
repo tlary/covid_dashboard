@@ -1,7 +1,7 @@
 name: update-covid-data
 on:
   schedule:
-    - cron: "25 22 * * *"
+    - cron: "22 22 * * *"
     
 jobs:
   build:
