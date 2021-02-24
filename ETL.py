@@ -1,6 +1,19 @@
-from utils import *
 from datetime import date
 import os
+import requests 
+import json 
+import pandas as pd
+
+def get_data_from_api(url):
+    request = requests.get(url)
+    if request.status_code == 200:
+        # transform to pandas DataFrame
+        df = pd.json_normalize(request.json()["features"])
+        return df
+    else:
+        print("The data could not be updated.")
+
+
 
 # extract data from API
 # data: https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/c2f3c3b935a242169c6bec82e1fa573e_0
