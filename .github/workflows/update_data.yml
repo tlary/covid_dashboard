@@ -1,0 +1,37 @@
+name: update-covid-data
+on:
+  schedule:
+    - cron: "25 22 * * *"
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: checkout repo content
+        uses: actions/checkout@v2 # check out repository and download it to the runner -> to run actions against code
+        
+      - name: setup python
+        uses: actions/setup-python@v2 # install python
+        with:
+          python-version: "3.8.6"
+          
+      - name: update data
+        run: |
+          python -m pip install --upgrade pip 
+          pip install -r requirements.txt
+          python ETL.py
+          
+      - name: commit files
+        run: |
+          git config --local user.email "tobias-larysch@gmx.net"
+          git config --local user.name "tlary94"
+          git add -A
+          git commit -m "update data" -a
+          
+      - name: push updated data to repo
+        uses: ad-m/github-push-action
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+        
