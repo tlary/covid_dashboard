@@ -1,2 +1,2 @@
 locales
-kde-l10n-de
+locales-all
