@@ -1,4 +1,3 @@
 locales
 language-pack-de
-language-pack-de-base
-language-pack-gnome-de
+kde-l10n-de
