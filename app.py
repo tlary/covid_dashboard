@@ -5,7 +5,7 @@ import plotly.graph_objs
 import plotly.express as px
 import os
 import locale
-locale.setlocale(locale.LC_ALL, "de_DE.utf8")
+locale.setlocale(locale.LC_ALL, "german")
 
 def get_timestamp(file):
     ts = os.path.getmtime(file)
