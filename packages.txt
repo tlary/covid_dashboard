@@ -1,3 +1,2 @@
 locales
-language-pack-de
 kde-l10n-de
