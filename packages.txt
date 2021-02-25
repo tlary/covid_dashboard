@@ -1,1 +1,2 @@
 locales
+language-pack-de
