@@ -82,7 +82,7 @@ todeGesamt = int(df.loc[df["verwaltungseinheit"]==input].todeGesamt)
 col1, col2, col3 = st.beta_columns(3)
 with col1:
     st.markdown("### *7-Tage-Inzidenz:*")
-    st.markdown("### <font color=‘#8b0000’><strong>{}</strong></font>".format(inzidenz), unsafe_allow_html=True)
+    st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(inzidenz), unsafe_allow_html=True)
     st.markdown("### *7-Tage-Fallzahl:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(fall7tage), unsafe_allow_html=True)
     st.write("\n")
@@ -134,8 +134,8 @@ pd.options.display.float_format = "{:,.1f}".format
 col4, col5 = st.beta_columns(2)
 with col4:
     df2.sort_values(input_number, ascending=True, inplace=True)
-    st.table(df2.head().style.format("{:7,.1f}"))
+    st.table(df2.head().style.format("{:n}"))
 
 with col5:
     df2.sort_values(input_number, ascending=False, inplace=True)
-    st.table(df2.head().style.format("{:7,.1f}"))
+    st.table(df2.head().style.format("{:n}"))
