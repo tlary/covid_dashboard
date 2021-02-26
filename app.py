@@ -4,6 +4,7 @@ import streamlit as st
 import plotly.graph_objs
 import plotly.express as px
 import os
+from datetime import datetime
 import locale
 locale.setlocale(locale.LC_ALL, "de_DE")
 
@@ -59,12 +60,15 @@ def create_map(df, api_url):
 
 # load data and create map object
 ts = get_timestamp("covid_data.csv")
+updated = datetime.fromtimestamp(ts).strftime("%d.%m.%Y %H:%M")
 df = load_data("covid_data.csv", timestamp=ts, index_col=0)
 fig = create_map(df, "https://opendata.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0.geojson")
 
 ##### ACTUAL APP:
 
 st.title("Covid-19 Dashboard: Inzidenz in Deutschland")
+st.markdown("*Datenstand: " + updated + "*")
+st.markdown("<hr style=\"height:3px;border:none;background-color:darkgrey\">", unsafe_allow_html=True)
 
 # filter data using input
 choices = list(df.verwaltungseinheit.unique())
