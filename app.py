@@ -14,7 +14,6 @@ def get_timestamp(file):
 
 @st.cache(suppress_st_warning=True)
 def load_data(file, timestamp, **kwargs):
-    st.write("Load data...")
     df = pd.read_csv(file, **kwargs)
     return df
 
