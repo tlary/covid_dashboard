@@ -12,7 +12,7 @@ def get_timestamp(file):
     ts = os.path.getmtime(file)
     return ts
 
-@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_data(file, timestamp, **kwargs):
     df = pd.read_csv(file, **kwargs)
     return df
@@ -61,6 +61,7 @@ def create_map(df, api_url):
 ts = get_timestamp("covid_data.csv")
 updated = datetime.fromtimestamp(ts).strftime("%d.%m.%Y %H:%M")
 df = load_data("covid_data.csv", timestamp=ts, index_col=0)
+history = load_data("history.csv", timestamp=ts, index_col="date")
 fig = create_map(df, "https://opendata.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0.geojson")
 
 ##### ACTUAL APP:
@@ -73,6 +74,7 @@ st.markdown("<hr style=\"height:3px;border:none;background-color:darkgrey\">", u
 choices = list(df.verwaltungseinheit.unique())
 input = st.selectbox("Wählen Sie eine Aggregationsebene. Sie können entweder einzelne Stadt- und Landkreise auswählen oder die gesamte BRD oder Bundesländer auswählen.", choices, index=choices.index('Bundesrepublik Deutschland'))
 
+# today's numbers:
 inzidenz = round(float(df.loc[df["verwaltungseinheit"]==input].inzidenz7Tage), 1)
 fall7tage = int(df.loc[df["verwaltungseinheit"]==input].infektionen7Tage)
 neuinfektionen = int(df.loc[df["verwaltungseinheit"]==input].infektionenNeu)
@@ -80,12 +82,19 @@ gesamtinfektionen = int(df.loc[df["verwaltungseinheit"]==input].infektionenGesam
 todeNeu = int(df.loc[df["verwaltungseinheit"]==input].todeNeu)
 todeGesamt = int(df.loc[df["verwaltungseinheit"]==input].todeGesamt)
 
+# numbers for comparison:
+inzidenz1ago = round(float(history.loc[history["verwaltungseinheit"]==input].inzidenz7Tage[-2]), 1)
+deaths1ago = round(float(history.loc[history["verwaltungseinheit"]==input].todeNeu[-2]), 1)
+neuinfektionen7ago = round(float(history.loc[history["verwaltungseinheit"]==input].infektionenNeu[-8]), 1)
+
 ### KEY FACTS FOR SELECTED AGGREGATION
 
+st.markdown("In Klammern dargestellt sind die Zahlen vom Vortag (7-Tage-Inzidenz, Neue Todesfälle) bzw. vor 7 Tagen (Neuinfektionen).")
 col1, col2, col3 = st.beta_columns(3)
 with col1:
     st.markdown("### *7-Tage-Inzidenz:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(inzidenz), unsafe_allow_html=True)
+    st.markdown("### <font color=‘#8b0000’><strong>({:n})</strong></font>".format(inzidenz1ago), unsafe_allow_html=True)
     st.markdown("### *7-Tage-Fallzahl:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(fall7tage), unsafe_allow_html=True)
     st.write("\n")
@@ -93,6 +102,7 @@ with col1:
 with col2:
     st.markdown("### *Neuinfektionen:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(neuinfektionen), unsafe_allow_html=True)
+    st.markdown("### <font color=‘#8b0000’><strong>({:n})</strong></font>".format(neuinfektionen7ago), unsafe_allow_html=True)
     st.markdown("### *Gesamtzahl Fälle:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(gesamtinfektionen), unsafe_allow_html=True)
     st.write("\n")
@@ -100,6 +110,7 @@ with col2:
 with col3:
     st.markdown("### *Neue Todesfälle:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(todeNeu), unsafe_allow_html=True)
+    st.markdown("### <font color=‘#8b0000’><strong>({:n})</strong></font>".format(deaths1ago), unsafe_allow_html=True)
     st.markdown("### *Gesamtzahl Todesfälle:*")
     st.markdown("### <font color=‘#8b0000’><strong>{:n}</strong></font>".format(todeGesamt), unsafe_allow_html=True)
     st.write("\n")
