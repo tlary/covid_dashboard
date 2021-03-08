@@ -11,7 +11,7 @@ COPY . .
 RUN apt-get update && apt-get install -y locales-all
 
 # pip install dependencies
-RUN pip install --no-cache-dir -r requirements_docker.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # expose port 8501 since flask runs on this port
 EXPOSE 8501 
