@@ -13,11 +13,15 @@ The app is built with streamlit and deployed on streamlit sharing.
 
 The dashboard webapp can also be run locally using docker. After [installing Docker](https://docs.docker.com/engine/install/), clone the repository, build the image from the Dockerfile and run the container. The app can then be accessed on port 8501. 
 
-`git clone https://github.com/tlary/covid_dashboard.git
-cd covid_dashboard
-docker build -t covid
-docker run -p 8501:8501 covid`
+```bash
+git clone https://github.com/tlary/covid_dashboard.git 
+cd covid_dashboard 
+docker build -t covid . 
+docker run -p 8501:8501 covid 
+```
 
 Instead of building the image from the Dockerfile, it can also be pulled from Docker Hub and the app can be accessed by simply running
 
-`docker run -p 8501:8501 tlary94/covid_streamlit`
+```bash
+docker run -p 8501:8501 tlary94/covid_streamlit
+```
