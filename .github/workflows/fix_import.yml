@@ -1,5 +1,12 @@
 name: fix-late-RKI-update
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      description: "Add date"
+      default: ""
+      required: true
+  
+  
     
 jobs:
   build:
