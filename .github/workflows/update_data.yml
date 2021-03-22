@@ -1,5 +1,7 @@
 name: update-covid-data
-on: [workflow_dispatch]
+on: 
+  schedule:
+    - cron "30 4 * * *" 
     
 jobs:
   build:
