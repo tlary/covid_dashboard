@@ -9,4 +9,4 @@ not_latest = history.date != latest
 history = history[not_latest]
 
 # save as .csv again
-history.to_csv("history.csv")
+history.to_csv("history.csv", index=False)
