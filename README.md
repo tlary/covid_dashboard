@@ -25,3 +25,4 @@ Instead of building the image from the Dockerfile, it can also be pulled from Do
 ```bash
 docker run -p 8501:8501 tlary94/covid_streamlit
 ```
+
