@@ -58,10 +58,11 @@ def create_map(df, api_url):
     return fig
 
 # load data and create map object
-ts = get_timestamp("covid_data.csv")
-updated = datetime.fromtimestamp(ts).strftime("%d.%m.%Y %H:%M")
-df = load_data("covid_data.csv", timestamp=ts, index_col=0)
-history = load_data("history.csv", timestamp=ts, index_col="date")
+ts_daily = get_timestamp("covid_data.csv")
+ts_history = get_timestamp("history.csv")
+updated = datetime.fromtimestamp(ts_daily).strftime("%d.%m.%Y %H:%M")
+df = load_data("covid_data.csv", timestamp=ts_daily, index_col=0)
+history = load_data("history.csv", timestamp=ts_history, index_col="date")
 fig = create_map(df, "https://opendata.arcgis.com/datasets/917fc37a709542548cc3be077a786c17_0.geojson")
 
 ##### ACTUAL APP:
