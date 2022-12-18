@@ -12,7 +12,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v2 # install python
         with:
-          python-version: "3.8"
+          python-version: "3.8.6"
           
       - name: update data
         run: |
